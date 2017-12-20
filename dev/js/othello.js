@@ -3,7 +3,7 @@ class Othello {
     this.boardSize = 8;
     this.initialBoardState = this.initialBoardState.bind(this);
     this.initialBoardState();
-    this.currentTurn = 0;
+    this.currentTurn = TILE_TYPE.BLACK;
   }
 
   initialBoardState() {
