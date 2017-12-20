@@ -10,5 +10,13 @@
     "othello"
   ],
   "author": "Austin Dudas",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dudasaus/othello-game.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dudasaus/othello-game/issues"
+  },
+  "homepage": "https://github.com/dudasaus/othello-game#readme"
 }
