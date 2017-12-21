@@ -4,7 +4,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(to bottom left, #6D4C41, #3E2723); }
+  background: #6D4C41 linear-gradient(to bottom left, #6D4C41, #3E2723); }
 
 .piece-extend, .game table td span::before, .game table td span::after {
   content: '';
@@ -20,26 +20,39 @@ body {
   transition: all 0.5s; }
 
 .game {
-  width: 528px;
-  height: 672px;
+  width: 396px;
+  height: 504px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   background: #1a1a1a;
-  border-radius: 48px;
+  border-radius: 36px;
   margin: auto; }
+  @media (max-width: 800px) {
+    .game {
+      width: 352px;
+      height: 448px;
+      border-radius: 32px; } }
   .game .piece-holder {
-    height: 40px;
-    width: 480px;
+    height: 30px;
+    width: 360px;
     background: #333;
     box-shadow: inset 0 0 10px #000;
     margin: 16px 0px; }
+    @media (max-width: 800px) {
+      .game .piece-holder {
+        height: 26.66667px;
+        width: 320px;
+        margin: 12px 0px; } }
     .game .piece-holder .piece {
       display: inline-block;
-      width: 16px;
+      width: 12px;
       position: relative;
       height: 100%; }
+      @media (max-width: 800px) {
+        .game .piece-holder .piece {
+          width: 10.66667px; } }
       .game .piece-holder .piece::before, .game .piece-holder .piece::after {
         content: '';
         display: inline-block;
@@ -56,16 +69,24 @@ body {
         background: #fff;
         box-shadow: inset 0 0 7px #000; }
   .game table {
-    width: 480px;
-    height: 480px;
+    width: 360px;
+    height: 360px;
     background: #006700; }
+    @media (max-width: 800px) {
+      .game table {
+        width: 320px;
+        height: 320px; } }
     .game table td {
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
       position: relative;
       padding: 0;
       transition: background-color 0.2s;
       box-shadow: inset 0 0 15px #001a00; }
+      @media (max-width: 800px) {
+        .game table td {
+          width: 26.66667px;
+          height: 26.66667px; } }
       .game table td:hover {
         background: #00cd00; }
       .game table td span {

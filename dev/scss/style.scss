@@ -1,14 +1,18 @@
+@import "sizes";
+
 body {
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(to bottom left, #6D4C41, #3E2723);
+  background: #6D4C41 linear-gradient(to bottom left, #6D4C41, #3E2723);
 }
 
-$gameHeight: 480px;
-$gameWidth: 480px;
+$gameHeight: 360px;
+$gameWidth: 360px;
+$phoneWidth: 320px;
+$phoneHeight: 320px;
 $boardColor: green;
 
 .piece-extend {
@@ -35,17 +39,30 @@ $boardColor: green;
   background: lighten(black, 10%);
   border-radius: $gameWidth / 10;
   margin: auto;
+  @include use-at(phone) {
+    width: $phoneWidth * 1.1;
+    height: $phoneHeight * 1.4;
+    border-radius: $phoneWidth / 10;
+  };
   .piece-holder {
     height: $gameHeight / 12;
     width: $gameWidth;
     background: #333;
     box-shadow: inset 0 0 10px #000;
     margin: 16px 0px;
+    @include use-at(phone) {
+      height: $phoneHeight / 12;
+      width: $phoneWidth;
+      margin: 12px 0px;
+    };
     .piece {
       display: inline-block;
       width: $gameWidth / 30;
       position: relative;
       height: 100%;
+      @include use-at(phone) {
+        width: $phoneWidth / 30;
+      }
       &::before, &::after {
         content: '';
         display: inline-block;
@@ -70,6 +87,10 @@ $boardColor: green;
     width: $gameWidth;
     height: $gameHeight;
     background: darken($boardColor, 5%);
+    @include use-at(phone) {
+      width: $phoneWidth;
+      height: $phoneHeight;
+    }
     td {
       width: $gameWidth / 12;
       height: $gameHeight / 12;
@@ -78,6 +99,10 @@ $boardColor: green;
       padding: 0;
       transition: background-color 0.2s;
       box-shadow: inset 0 0 15px darken($boardColor, 20%);
+      @include use-at(phone) {
+        width: $phoneWidth / 12;
+        height: $phoneHeight / 12;
+      }
       &:hover {
         background: lighten($boardColor, 15%);
       }

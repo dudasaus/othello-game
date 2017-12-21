@@ -1,0 +1,23 @@
+// Screen sizes
+
+// Max sizes
+$desktopMaxSize: 1384px;
+$tabletMaxSize: 1000px;
+$phoneMaxSize: 800px;
+
+// Min sizes
+$widescreenMinSize: 1384px;
+$desktopMinSize: 1000px;
+$tabletMinSize: 800px;
+
+@mixin use-at($sz) {
+    @if $sz == phone {
+        @media (screen and max-width: #{$phoneMaxSize}) { @content; }
+    }
+    @else if $sz == tablet {
+        @media (max-width: #{$tabletMaxSize}) { @content; }
+    }
+    @else if $sz == desktop {
+        @media (max-width: #{$desktopMaxSize}) { @content; }
+    }
+}
