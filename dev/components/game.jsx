@@ -12,6 +12,17 @@ class Game extends React.Component {
     };
 
     this.renderBoard = this.renderBoard.bind(this);
+    this.clickTile = this.clickTile.bind(this);
+  }
+
+  clickTile(r, c) {
+    return () => {
+      this.game.playPiece(r, c);
+      this.setState({
+        boardState: this.game.boardState,
+        turn: this.game.currentTurn
+      });
+    }
   }
 
   renderBoard() {
@@ -23,7 +34,7 @@ class Game extends React.Component {
               <tr key={rIndex}>
                 { r.map((c, cIndex) => {
                   return (
-                    <td key={rIndex + ' ' + cIndex}>
+                    <td key={rIndex + ' ' + cIndex} onClick={this.clickTile(rIndex, cIndex)}>
                       <span className={tileClass[c]}></span>
                     </td>
                   );

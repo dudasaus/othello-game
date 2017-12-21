@@ -4,6 +4,7 @@ class Othello {
     this.initialBoardState = this.initialBoardState.bind(this);
     this.initialBoardState();
     this.currentTurn = TILE_TYPE.BLACK;
+    this.playPiece = this.playPiece.bind(this);
   }
 
   initialBoardState() {
@@ -39,6 +40,11 @@ class Othello {
       }
       console.log(line);
     }
+  }
+
+  playPiece(r, c) {
+    this.boardState[r][c] = this.currentTurn;
+    this.currentTurn = (this.currentTurn == TILE_TYPE.BLACK) ? TILE_TYPE.WHITE : TILE_TYPE.BLACK;
   }
 }
 
