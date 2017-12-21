@@ -27,9 +27,19 @@ class Game extends React.Component {
   }
 
   renderBoard() {
+    let blackPieces = [];
+    let whitePieces = [];
+    for (let i = 0; i < Math.floor(this.game.moves / 2); ++i) {
+      blackPieces.push(<span key={i} className="piece"></span>);
+      whitePieces.push(<span key={i} className="piece"></span>);
+    }
+    if (this.game.moves % 2 != 0) {
+      whitePieces.push(<span key={64} className="piece"></span>);
+    }
     return (
       <div className="game">
         {/* <h1>{ this.state.turn == 1 ? 'BLACK' : 'WHITE'}&apos;s turn</h1> */}
+        <div className="piece-holder">{whitePieces}</div>
         <table>
           <tbody>
             { this.state.boardState.map((r, rIndex) => {
@@ -47,6 +57,7 @@ class Game extends React.Component {
             })}
           </tbody>
         </table>
+        <div className="piece-holder">{blackPieces}</div>
       </div>
     );
   }

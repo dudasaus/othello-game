@@ -11,7 +11,7 @@ $gameHeight: 480px;
 $gameWidth: 480px;
 $boardColor: green;
 
-.piece {
+.piece-extend {
   content: '';
   position: absolute;
   left: 5%;
@@ -35,6 +35,37 @@ $boardColor: green;
   background: lighten(black, 10%);
   border-radius: $gameWidth / 10;
   margin: auto;
+  .piece-holder {
+    height: $gameHeight / 12;
+    width: $gameWidth;
+    background: #333;
+    box-shadow: inset 0 0 10px #000;
+    margin: 16px 0px;
+    .piece {
+      display: inline-block;
+      width: $gameWidth / 32;
+      position: relative;
+      height: 100%;
+      &::before, &::after {
+        content: '';
+        display: inline-block;
+        width: 50%;
+        position: absolute;
+        top: 0;
+        height: 100%;
+      }
+      &::before {
+        left: 0;
+        background: #333;
+        box-shadow: inset 0 0 7px #000;
+      }
+      &::after {
+        right: 0;
+        background: #fff;
+        box-shadow: inset 0 0 7px #000;
+      }
+    }
+  }
   table {
     width: $gameWidth;
     height: $gameHeight;
@@ -56,12 +87,12 @@ $boardColor: green;
         display: block;
         position: relative;
         &::before {
-          @extend .piece;
-          background: #000;
-          box-shadow: inset 0 0 15px #666;
+          @extend .piece-extend;
+          background: #222;
+          box-shadow: inset 0 0 10px #000;
         }
         &::after {
-          @extend .piece;
+          @extend .piece-extend;
           background: #fff;
           box-shadow: inset 0 0 10px #000;
         }

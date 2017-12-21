@@ -6,7 +6,7 @@ body {
   min-height: 100vh;
   background: linear-gradient(to bottom left, #6D4C41, #3E2723); }
 
-.piece, .game table td span::before, .game table td span::after {
+.piece-extend, .game table td span::before, .game table td span::after {
   content: '';
   position: absolute;
   left: 5%;
@@ -29,6 +29,32 @@ body {
   background: #1a1a1a;
   border-radius: 48px;
   margin: auto; }
+  .game .piece-holder {
+    height: 40px;
+    width: 480px;
+    background: #333;
+    box-shadow: inset 0 0 10px #000;
+    margin: 16px 0px; }
+    .game .piece-holder .piece {
+      display: inline-block;
+      width: 15px;
+      position: relative;
+      height: 100%; }
+      .game .piece-holder .piece::before, .game .piece-holder .piece::after {
+        content: '';
+        display: inline-block;
+        width: 50%;
+        position: absolute;
+        top: 0;
+        height: 100%; }
+      .game .piece-holder .piece::before {
+        left: 0;
+        background: #333;
+        box-shadow: inset 0 0 7px #000; }
+      .game .piece-holder .piece::after {
+        right: 0;
+        background: #fff;
+        box-shadow: inset 0 0 7px #000; }
   .game table {
     width: 480px;
     height: 480px;
@@ -48,8 +74,8 @@ body {
         display: block;
         position: relative; }
         .game table td span::before {
-          background: #000;
-          box-shadow: inset 0 0 15px #666; }
+          background: #222;
+          box-shadow: inset 0 0 10px #000; }
         .game table td span::after {
           background: #fff;
           box-shadow: inset 0 0 10px #000; }

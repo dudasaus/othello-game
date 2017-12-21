@@ -1,5 +1,7 @@
 class Othello {
   constructor() {
+    this.moves = 64;
+
     this.boardSize = 8;
     this.initialBoardState = this.initialBoardState.bind(this);
     this.initialBoardState();
@@ -58,6 +60,7 @@ class Othello {
     this.boardState[r][c] = this.currentTurn;
     this.flipAllDirections(r, c);
     this.currentTurn = (this.currentTurn == TILE_TYPE.BLACK) ? TILE_TYPE.WHITE : TILE_TYPE.BLACK;
+    --this.moves;
     return true;
   }
 
