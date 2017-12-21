@@ -55,7 +55,7 @@ class Othello {
       }
     }
     this.boardState[r][c] = this.currentTurn;
-    console.log(this.flipAllDirections(r, c));
+    this.flipAllDirections(r, c);
     this.currentTurn = (this.currentTurn == TILE_TYPE.BLACK) ? TILE_TYPE.WHITE : TILE_TYPE.BLACK;
     return true;
   }

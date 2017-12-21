@@ -1,35 +1,50 @@
 body {
   margin: 0; }
 
-table.game {
-  margin: auto;
+.piece, .game table td span::before, .game table td span::after {
+  content: '';
+  position: absolute;
+  left: 5%;
+  top: 5%;
+  right: 5%;
+  bottom: 5%;
+  border-radius: 50%;
+  display: block;
+  backface-visibility: hidden;
+  transform: rotateY(90deg);
+  transition: all 0.5s; }
+
+.game {
   width: 480px;
   height: 480px;
-  background: #006700; }
-  table.game td {
-    width: 40px;
-    height: 40px;
-    position: relative;
-    background: green;
-    padding: 0;
-    transition: background-color 0.2s; }
-    table.game td:hover {
-      background: #00cd00; }
-    table.game td span {
-      width: 100%;
-      height: 100%;
-      display: block;
-      position: relative; }
-      table.game td span::after {
-        content: '';
-        position: absolute;
-        left: 5%;
-        top: 5%;
-        right: 5%;
-        bottom: 5%;
-        border-radius: 50%;
-        display: block; }
-      table.game td span.white::after {
-        background: #fff; }
-      table.game td span.black::after {
-        background: #000; }
+  margin: auto; }
+  .game table {
+    width: inherit;
+    height: inherit;
+    background: #006700; }
+    .game table td {
+      width: 40px;
+      height: 40px;
+      position: relative;
+      background: green;
+      padding: 0;
+      transition: background-color 0.2s; }
+      .game table td:hover {
+        background: #00cd00; }
+      .game table td span {
+        width: 100%;
+        height: 100%;
+        display: block;
+        position: relative; }
+        .game table td span::before {
+          background: #000; }
+        .game table td span::after {
+          background: #fff; }
+        .game table td span.black::before {
+          transform: rotateY(0deg); }
+        .game table td span.black::after {
+          transform: rotateY(180deg); }
+        .game table td span.white::before {
+          transform: rotateY(180deg); }
+        .game table td span.white::after {
+          transform: rotateY(0deg); }

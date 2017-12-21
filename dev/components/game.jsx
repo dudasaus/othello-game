@@ -28,23 +28,26 @@ class Game extends React.Component {
 
   renderBoard() {
     return (
-      <table className="game">
-        <tbody>
-          { this.state.boardState.map((r, rIndex) => {
-            return (
-              <tr key={rIndex}>
-                { r.map((c, cIndex) => {
-                  return (
-                    <td key={rIndex + ' ' + cIndex} onClick={this.clickTile(rIndex, cIndex)}>
-                      <span className={tileClass[c]}></span>
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div className="game">
+        <h1>{ this.state.turn == 1 ? 'BLACK' : 'WHITE'}&apos;s turn</h1>
+        <table className="game">
+          <tbody>
+            { this.state.boardState.map((r, rIndex) => {
+              return (
+                <tr key={rIndex}>
+                  { r.map((c, cIndex) => {
+                    return (
+                      <td key={rIndex + ' ' + cIndex} onClick={this.clickTile(rIndex, cIndex)}>
+                        <span className={tileClass[c]}></span>
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     );
   }
 

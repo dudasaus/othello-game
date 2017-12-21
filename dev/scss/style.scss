@@ -6,41 +6,67 @@ $gameHeight: 480px;
 $gameWidth: 480px;
 $boardColor: green;
 
-table.game {
+.piece {
+  content: '';
+  position: absolute;
+  left: 5%;
+  top: 5%;
+  right: 5%;
+  bottom: 5%;
+  border-radius: 50%;
+  display: block;
+  backface-visibility: hidden;
+  transform: rotateY(90deg);
+  transition: all 0.5s;
+}
+
+.game {
+  width: $gameWidth;
+  height: $gameHeight;
   margin: auto;
-  width: 480px;
-  height: 480px;
-  background: darken($boardColor, 5%);
-  td {
-    width: $gameWidth / 12;
-    height: $gameHeight / 12;
-    position: relative;
-    background: $boardColor;
-    padding: 0;
-    transition: background-color 0.2s;
-    &:hover {
-      background: lighten($boardColor, 15%);
-    }
-    span {
-      width: 100%;
-      height: 100%;
-      display: block;
+  table {
+    width: inherit;
+    height: inherit;
+    background: darken($boardColor, 5%);
+    td {
+      width: $gameWidth / 12;
+      height: $gameHeight / 12;
       position: relative;
-      &::after {
-        content: '';
-        position: absolute;
-        left: 5%;
-        top: 5%;
-        right: 5%;
-        bottom: 5%;
-        border-radius: 50%;
+      background: $boardColor;
+      padding: 0;
+      transition: background-color 0.2s;
+      &:hover {
+        background: lighten($boardColor, 15%);
+      }
+      span {
+        width: 100%;
+        height: 100%;
         display: block;
-      }
-      &.white::after {
-        background: #fff;
-      }
-      &.black::after {
-        background: #000;
+        position: relative;
+        &::before {
+          @extend .piece;
+          background: #000;
+        }
+        &::after {
+          @extend .piece;
+          background: #fff;
+        }
+        &.black {
+          &::before {
+            transform: rotateY(0deg);
+          }
+          &::after {
+            transform: rotateY(180deg);
+          }
+        }
+        &.white {
+          &::before {
+            transform: rotateY(180deg);
+          }
+          &::after {
+            transform: rotateY(0deg);
+          }
+        }
       }
     }
   }
