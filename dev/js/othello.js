@@ -1,6 +1,6 @@
 class Othello {
   constructor() {
-    this.moves = 64;
+    this.moves = 60;
 
     this.boardSize = 8;
     this.initialBoardState = this.initialBoardState.bind(this);

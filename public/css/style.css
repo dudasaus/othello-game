@@ -37,7 +37,7 @@ body {
     margin: 16px 0px; }
     .game .piece-holder .piece {
       display: inline-block;
-      width: 15px;
+      width: 16px;
       position: relative;
       height: 100%; }
       .game .piece-holder .piece::before, .game .piece-holder .piece::after {

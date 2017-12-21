@@ -43,7 +43,7 @@ $boardColor: green;
     margin: 16px 0px;
     .piece {
       display: inline-block;
-      width: $gameWidth / 32;
+      width: $gameWidth / 30;
       position: relative;
       height: 100%;
       &::before, &::after {
