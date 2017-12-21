@@ -17,11 +17,12 @@ class Game extends React.Component {
 
   clickTile(r, c) {
     return () => {
-      this.game.playPiece(r, c);
-      this.setState({
-        boardState: this.game.boardState,
-        turn: this.game.currentTurn
-      });
+      if (this.game.playPiece(r, c)) {
+        this.setState({
+          boardState: this.game.boardState,
+          turn: this.game.currentTurn
+        });
+      }
     }
   }
 

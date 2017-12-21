@@ -11,7 +11,8 @@ table.game {
     height: 40px;
     position: relative;
     background: green;
-    padding: 0; }
+    padding: 0;
+    transition: background-color 0.2s; }
     table.game td:hover {
       background: #00cd00; }
     table.game td span {

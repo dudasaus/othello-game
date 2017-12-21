@@ -17,6 +17,7 @@ table.game {
     position: relative;
     background: $boardColor;
     padding: 0;
+    transition: background-color 0.2s;
     &:hover {
       background: lighten($boardColor, 15%);
     }

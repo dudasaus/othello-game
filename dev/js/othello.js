@@ -5,6 +5,10 @@ class Othello {
     this.initialBoardState();
     this.currentTurn = TILE_TYPE.BLACK;
     this.playPiece = this.playPiece.bind(this);
+    this.flipPiece = this.flipPiece.bind(this);
+    this.checkValidMove = this.checkValidMove.bind(this);
+    this.checkDirection = this.checkDirection.bind(this);
+    this.checkAllDirections = this.checkAllDirections.bind(this);
   }
 
   initialBoardState() {
@@ -42,9 +46,83 @@ class Othello {
     }
   }
 
-  playPiece(r, c) {
+  playPiece(r, c, mustCheckValid=true) {
+    if (mustCheckValid) {
+      if (!this.checkValidMove(r, c)) {
+        return false;
+      }
+    }
     this.boardState[r][c] = this.currentTurn;
     this.currentTurn = (this.currentTurn == TILE_TYPE.BLACK) ? TILE_TYPE.WHITE : TILE_TYPE.BLACK;
+    return true;
+  }
+
+  checkValidMove(r, c) {
+    if (this.boardState[r][c] != TILE_TYPE.EMPTY) {
+      return false;
+    }
+    if (this.checkAllDirections(r,c) == 0) {
+      return false;
+    }
+    return true;
+  }
+
+  // Returns the number of pieces that would flip in the given direction
+  // rChange and cChange must be in [-1, 1]
+  checkDirection(r, c, rChange, cChange) {
+    // Check adjacent tile is in bounds
+    if (
+      r + rChange >= this.boardSize ||
+      r + rChange < 0 ||
+      c + cChange >= this.boardSize ||
+      c + cChange < 0
+    ) { return 0; }
+    // Check adjacent tile is the opposite color
+    const ajacentTile = this.boardState[r + rChange][c + cChange];
+    if (ajacentTile == this.currentTurn || ajacentTile == TILE_TYPE.EMPTY) {
+      return 0;
+    }
+    // Continue checking down the line
+    for (let i = 2; i < this.boardSize; ++i) {
+      const rCheck = r + i * rChange;
+      const cCheck = c + i * cChange;
+      // Check bounds
+      if (
+        rCheck < 0 || rCheck >= this.boardSize ||
+        cCheck < 0 || cCheck >= this.boardSize
+      ) { return 0; }
+
+      const tileCheck = this.boardState[rCheck][cCheck];
+      // If it's empty, nothing will flip
+      if (tileCheck == TILE_TYPE.EMPTY) { return 0; }
+      // If it's the player's color, we will flip i - 1 pieces
+      if (tileCheck == this.currentTurn) { return i - 1; }
+    }
+
+    return 0;
+  }
+
+  // Returns the total number of tiles that would flip if played here
+  checkAllDirections(r, c) {
+    return (
+        this.checkDirection(r, c, 0, 1) +
+        this.checkDirection(r, c, 1, 1) +
+        this.checkDirection(r, c, 1, 0) +
+        this.checkDirection(r, c, 1, -1) +
+        this.checkDirection(r, c, 0, -1) +
+        this.checkDirection(r, c, -1, -1) +
+        this.checkDirection(r, c, -1, 0) +
+        this.checkDirection(r, c, -1, 1)
+    );
+  }
+
+  flipPiece(r, c) {
+    if (this.boardState[r][c] == TILE_TYPE.BLACK) {
+      this.boardState[r][c] = TILE_TYPE.WHITE;
+    }
+    else if (this.boardState[r][c] == TILE_TYPE.WHITE) {
+      this.boardState[r][c] = TILE_TYPE.BLACK;
+    }
   }
 }
 
