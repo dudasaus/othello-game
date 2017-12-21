@@ -10,11 +10,13 @@ class Game extends React.Component {
       boardState: this.game.boardState,
       turn: this.game.currentTurn
     };
+
+    this.renderBoard = this.renderBoard.bind(this);
   }
 
-  render() {
+  renderBoard() {
     return (
-      <table>
+      <table className="game">
         <tbody>
           { this.state.boardState.map((r, rIndex) => {
             return (
@@ -22,9 +24,9 @@ class Game extends React.Component {
                 { r.map((c, cIndex) => {
                   return (
                     <td key={rIndex + ' ' + cIndex}>
-                      {c}
+                      <span className={tileClass[c]}></span>
                     </td>
-                  )
+                  );
                 })}
               </tr>
             );
@@ -33,6 +35,16 @@ class Game extends React.Component {
       </table>
     );
   }
+
+  render() {
+    return (
+      <div>
+        { this.renderBoard() }
+      </div>
+    );
+  }
 }
+
+const tileClass = ['empty', 'black', 'white'];
 
 module.exports = { Game };
