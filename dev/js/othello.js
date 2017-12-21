@@ -128,7 +128,7 @@ class Othello {
   canFlipAny() {
     for (let r = 0; r < this.boardSize; ++r) {
       for (let c = 0; c < this.boardSize; ++c) {
-        if (this.checkAllDirections(r,c) > 0) {
+        if (this.boardState[r][c] == TILE_TYPE.EMPTY && this.checkAllDirections(r,c) > 0) {
           console.log(r, c);
           return true;
         }
