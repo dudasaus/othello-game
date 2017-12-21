@@ -1,5 +1,10 @@
 body {
-  margin: 0; }
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to bottom left, #6D4C41, #3E2723); }
 
 .piece, .game table td span::before, .game table td span::after {
   content: '';
@@ -15,20 +20,26 @@ body {
   transition: all 0.5s; }
 
 .game {
-  width: 480px;
-  height: 480px;
+  width: 528px;
+  height: 672px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #1a1a1a;
+  border-radius: 48px;
   margin: auto; }
   .game table {
-    width: inherit;
-    height: inherit;
+    width: 480px;
+    height: 480px;
     background: #006700; }
     .game table td {
       width: 40px;
       height: 40px;
       position: relative;
-      background: green;
       padding: 0;
-      transition: background-color 0.2s; }
+      transition: background-color 0.2s;
+      box-shadow: inset 0 0 15px #001a00; }
       .game table td:hover {
         background: #00cd00; }
       .game table td span {
@@ -37,9 +48,11 @@ body {
         display: block;
         position: relative; }
         .game table td span::before {
-          background: #000; }
+          background: #000;
+          box-shadow: inset 0 0 15px #666; }
         .game table td span::after {
-          background: #fff; }
+          background: #fff;
+          box-shadow: inset 0 0 10px #000; }
         .game table td span.black::before {
           transform: rotateY(0deg); }
         .game table td span.black::after {

@@ -29,8 +29,8 @@ class Game extends React.Component {
   renderBoard() {
     return (
       <div className="game">
-        <h1>{ this.state.turn == 1 ? 'BLACK' : 'WHITE'}&apos;s turn</h1>
-        <table className="game">
+        {/* <h1>{ this.state.turn == 1 ? 'BLACK' : 'WHITE'}&apos;s turn</h1> */}
+        <table>
           <tbody>
             { this.state.boardState.map((r, rIndex) => {
               return (

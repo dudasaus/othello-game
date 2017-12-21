@@ -62,10 +62,13 @@ class Othello {
   }
 
   checkValidMove(r, c) {
+    // Make sure the tile is empty
     if (this.boardState[r][c] != TILE_TYPE.EMPTY) {
       return false;
     }
+    // Will this move flip any pieces?
     if (this.checkAllDirections(r,c) == 0) {
+      // Is there a move that can flip pieces?
       if (this.canFlipAny()) {
         return false;
       }
