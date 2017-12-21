@@ -9,6 +9,8 @@ class Othello {
     this.checkValidMove = this.checkValidMove.bind(this);
     this.checkDirection = this.checkDirection.bind(this);
     this.checkAllDirections = this.checkAllDirections.bind(this);
+    this.flipDirection = this.flipDirection.bind(this);
+    this.flipAllDirections = this.flipAllDirections.bind(this);
   }
 
   initialBoardState() {
@@ -53,6 +55,7 @@ class Othello {
       }
     }
     this.boardState[r][c] = this.currentTurn;
+    console.log(this.flipAllDirections(r, c));
     this.currentTurn = (this.currentTurn == TILE_TYPE.BLACK) ? TILE_TYPE.WHITE : TILE_TYPE.BLACK;
     return true;
   }
@@ -113,6 +116,27 @@ class Othello {
         this.checkDirection(r, c, -1, -1) +
         this.checkDirection(r, c, -1, 0) +
         this.checkDirection(r, c, -1, 1)
+    );
+  }
+
+  flipDirection(r, c, rChange, cChange) {
+    const count = this.checkDirection(r, c, rChange, cChange);
+    for (let i = 1; i <= count; ++i) {
+      this.flipPiece(r + i * rChange, c + i * cChange);
+    }
+    return count;
+  }
+
+  flipAllDirections(r, c) {
+    return (
+        this.flipDirection(r, c, 0, 1) +
+        this.flipDirection(r, c, 1, 1) +
+        this.flipDirection(r, c, 1, 0) +
+        this.flipDirection(r, c, 1, -1) +
+        this.flipDirection(r, c, 0, -1) +
+        this.flipDirection(r, c, -1, -1) +
+        this.flipDirection(r, c, -1, 0) +
+        this.flipDirection(r, c, -1, 1)
     );
   }
 
