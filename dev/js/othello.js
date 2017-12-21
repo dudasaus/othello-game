@@ -11,6 +11,7 @@ class Othello {
     this.checkAllDirections = this.checkAllDirections.bind(this);
     this.flipDirection = this.flipDirection.bind(this);
     this.flipAllDirections = this.flipAllDirections.bind(this);
+    this.canFlipAny = this.canFlipAny.bind(this);
   }
 
   initialBoardState() {
@@ -65,7 +66,12 @@ class Othello {
       return false;
     }
     if (this.checkAllDirections(r,c) == 0) {
-      return false;
+      if (this.canFlipAny()) {
+        return false;
+      }
+      else {
+        return true;
+      }
     }
     return true;
   }
@@ -119,6 +125,18 @@ class Othello {
     );
   }
 
+  canFlipAny() {
+    for (let r = 0; r < this.boardSize; ++r) {
+      for (let c = 0; c < this.boardSize; ++c) {
+        if (this.checkAllDirections(r,c) > 0) {
+          console.log(r, c);
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   flipDirection(r, c, rChange, cChange) {
     const count = this.checkDirection(r, c, rChange, cChange);
     for (let i = 1; i <= count; ++i) {
@@ -154,6 +172,6 @@ const TILE_TYPE = {
   EMPTY: 0,
   BLACK: 1,
   WHITE: 2
-}
+};
 
-module.exports = { Othello }
+module.exports = { Othello };
