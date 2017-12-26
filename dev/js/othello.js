@@ -9,6 +9,8 @@ class Othello {
       }
     }
 
+    this.lastMove = null;
+
     this.boardSize = 8;
     this.initialBoardState = this.initialBoardState.bind(this);
     this.initialBoardState();
@@ -66,6 +68,7 @@ class Othello {
     }
     this.boardState[r][c] = this.currentTurn;
     this.flipAllDirections(r, c);
+    this.lastMove = {r, c};
     this.currentTurn = (this.currentTurn == TILE_TYPE.BLACK) ? TILE_TYPE.WHITE : TILE_TYPE.BLACK;
     --this.moves;
     return true;
@@ -223,4 +226,4 @@ const TILE_TYPE = {
   WHITE: 2
 };
 
-module.exports = { Othello };
+module.exports = { Othello, TILE_TYPE };

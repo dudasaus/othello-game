@@ -9,7 +9,8 @@ class Game extends React.Component {
     this.game = new Othello(null, new ComputerPlayer);
     this.state = {
       boardState: this.game.boardState,
-      turn: this.game.currentTurn
+      turn: this.game.currentTurn,
+      evalGrid: this.game.players[2].lastEvaluation.slice()
     };
 
     this.renderBoard = this.renderBoard.bind(this);
@@ -39,7 +40,8 @@ class Game extends React.Component {
     this.game.computerTurn();
     this.setState({
       boardState: this.game.boardState,
-      turn: this.game.currentTurn
+      turn: this.game.currentTurn,
+      evalGrid: this.game.players[2].lastEvaluation.slice()
     });
   }
 
@@ -65,7 +67,8 @@ class Game extends React.Component {
                   { r.map((c, cIndex) => {
                     return (
                       <td key={rIndex + ' ' + cIndex} onClick={this.clickTile(rIndex, cIndex)}>
-                        <span className={tileClass[c]}></span>
+                        <span className={'tile ' + tileClass[c]}></span>
+                        <span className="eval">{this.state.evalGrid[rIndex][cIndex]}</span>
                       </td>
                     );
                   })}
