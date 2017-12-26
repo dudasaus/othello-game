@@ -3,6 +3,11 @@ class Othello {
     this.moves = 60;
 
     this.players = [null, player1, player2]; // dummy 0th element
+    for (let p of this.players) {
+      if (p !== null) {
+        p.game = this;
+      }
+    }
 
     this.boardSize = 8;
     this.initialBoardState = this.initialBoardState.bind(this);
@@ -72,9 +77,12 @@ class Othello {
       return false;
     }
     // Will this move flip any pieces?
-    if (this.checkAllDirections(r,c) == 0) {
+    if (this.checkAllDirections(r, c) == 0) {
       // Is there a move that can flip pieces?
       if (this.canFlipAny()) {
+        return false;
+      }
+      else if (!this.hasAdjacent(r, c)) {
         return false;
       }
       else {
@@ -122,22 +130,46 @@ class Othello {
   // Returns the total number of tiles that would flip if played here
   checkAllDirections(r, c) {
     return (
-        this.checkDirection(r, c, 0, 1) +
-        this.checkDirection(r, c, 1, 1) +
-        this.checkDirection(r, c, 1, 0) +
-        this.checkDirection(r, c, 1, -1) +
-        this.checkDirection(r, c, 0, -1) +
-        this.checkDirection(r, c, -1, -1) +
-        this.checkDirection(r, c, -1, 0) +
-        this.checkDirection(r, c, -1, 1)
+      this.checkDirection(r, c, 0, 1) +
+      this.checkDirection(r, c, 1, 1) +
+      this.checkDirection(r, c, 1, 0) +
+      this.checkDirection(r, c, 1, -1) +
+      this.checkDirection(r, c, 0, -1) +
+      this.checkDirection(r, c, -1, -1) +
+      this.checkDirection(r, c, -1, 0) +
+      this.checkDirection(r, c, -1, 1)
     );
+  }
+
+  hasAdjacent(r, c) {
+    return (
+      this.checkAdjacentDirection(r, c, 0, 1) ||
+      this.checkAdjacentDirection(r, c, 1, 1) ||
+      this.checkAdjacentDirection(r, c, 1, 0) ||
+      this.checkAdjacentDirection(r, c, 1, -1) ||
+      this.checkAdjacentDirection(r, c, 0, -1) ||
+      this.checkAdjacentDirection(r, c, -1, -1) ||
+      this.checkAdjacentDirection(r, c, -1, 0) ||
+      this.checkAdjacentDirection(r, c, -1, 1)
+    );
+  }
+
+  checkAdjacentDirection(r, c, rChange, cChange) {
+    // Check for in bounds
+    if (
+      r + rChange >= this.boardSize ||
+      r + rChange < 0 ||
+      c + cChange >= this.boardSize ||
+      c + cChange < 0
+    ) { return false; }
+    return (this.boardState[r + rChange][c + cChange] !== TILE_TYPE.EMPTY);
   }
 
   canFlipAny() {
     for (let r = 0; r < this.boardSize; ++r) {
       for (let c = 0; c < this.boardSize; ++c) {
         if (this.boardState[r][c] == TILE_TYPE.EMPTY && this.checkAllDirections(r,c) > 0) {
-          console.log(r, c);
+          // console.log(r, c);
           return true;
         }
       }
@@ -172,6 +204,15 @@ class Othello {
     }
     else if (this.boardState[r][c] == TILE_TYPE.WHITE) {
       this.boardState[r][c] = TILE_TYPE.BLACK;
+    }
+  }
+
+  computerTurn() {
+    if (this.players[this.currentTurn] !== null) {
+      this.players[this.currentTurn].makeMove();
+    }
+    else {
+      console.error(`Othello: not computer's turn`);
     }
   }
 }

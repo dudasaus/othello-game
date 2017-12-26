@@ -6,7 +6,7 @@ import { ComputerPlayer } from '../js/computer.js';
 class Game extends React.Component {
   constructor() {
     super();
-    this.game = new Othello(null, new ComputerPlayer());
+    this.game = new Othello(null, new ComputerPlayer);
     this.state = {
       boardState: this.game.boardState,
       turn: this.game.currentTurn
@@ -14,17 +14,33 @@ class Game extends React.Component {
 
     this.renderBoard = this.renderBoard.bind(this);
     this.clickTile = this.clickTile.bind(this);
+    this.forceComputerTurn = this.forceComputerTurn.bind(this);
   }
 
   clickTile(r, c) {
     return () => {
+      if (this.game.players[this.game.currentTurn] !== null) {
+        console.log(`Computer's turn`);
+        return;
+      }
       if (this.game.playPiece(r, c)) {
         this.setState({
           boardState: this.game.boardState,
           turn: this.game.currentTurn
         });
+        setTimeout( () => {
+          this.forceComputerTurn();
+        }, 2000);
       }
     }
+  }
+
+  forceComputerTurn() {
+    this.game.computerTurn();
+    this.setState({
+      boardState: this.game.boardState,
+      turn: this.game.currentTurn
+    });
   }
 
   renderBoard() {
