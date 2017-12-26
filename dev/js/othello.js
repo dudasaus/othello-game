@@ -1,6 +1,8 @@
 class Othello {
-  constructor() {
+  constructor(player1=null, player2=null) {
     this.moves = 60;
+
+    this.players = [null, player1, player2]; // dummy 0th element
 
     this.boardSize = 8;
     this.initialBoardState = this.initialBoardState.bind(this);
@@ -153,14 +155,14 @@ class Othello {
 
   flipAllDirections(r, c) {
     return (
-        this.flipDirection(r, c, 0, 1) +
-        this.flipDirection(r, c, 1, 1) +
-        this.flipDirection(r, c, 1, 0) +
-        this.flipDirection(r, c, 1, -1) +
-        this.flipDirection(r, c, 0, -1) +
-        this.flipDirection(r, c, -1, -1) +
-        this.flipDirection(r, c, -1, 0) +
-        this.flipDirection(r, c, -1, 1)
+      this.flipDirection(r, c, 0, 1) +
+      this.flipDirection(r, c, 1, 1) +
+      this.flipDirection(r, c, 1, 0) +
+      this.flipDirection(r, c, 1, -1) +
+      this.flipDirection(r, c, 0, -1) +
+      this.flipDirection(r, c, -1, -1) +
+      this.flipDirection(r, c, -1, 0) +
+      this.flipDirection(r, c, -1, 1)
     );
   }
 

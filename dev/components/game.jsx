@@ -1,11 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Othello } from '../js/othello.js';
+import { ComputerPlayer } from '../js/computer.js';
 
 class Game extends React.Component {
   constructor() {
     super();
-    this.game = new Othello;
+    this.game = new Othello(null, new ComputerPlayer());
     this.state = {
       boardState: this.game.boardState,
       turn: this.game.currentTurn
