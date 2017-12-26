@@ -218,6 +218,18 @@ class Othello {
       console.error(`Othello: not computer's turn`);
     }
   }
+
+  countPieces(tiletype) {
+    let count = 0;
+    for (let r = 0; r < this.boardSize; ++r) {
+      for (let c = 0; c < this.boardSize; ++c) {
+        if (this.boardState[r][c] === tiletype) {
+          ++count;
+        }
+      }
+    }
+    return count;
+  }
 }
 
 const TILE_TYPE = {

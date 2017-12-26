@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Othello } from '../js/othello.js';
+import { Othello, TILE_TYPE } from '../js/othello.js';
 import { ComputerPlayer } from '../js/computer.js';
 
 class Game extends React.Component {
@@ -16,6 +16,7 @@ class Game extends React.Component {
     this.renderBoard = this.renderBoard.bind(this);
     this.clickTile = this.clickTile.bind(this);
     this.forceComputerTurn = this.forceComputerTurn.bind(this);
+    this.checkEndGame = this.checkEndGame.bind(this);
   }
 
   clickTile(r, c) {
@@ -29,9 +30,11 @@ class Game extends React.Component {
           boardState: this.game.boardState,
           turn: this.game.currentTurn
         });
-        setTimeout( () => {
-          this.forceComputerTurn();
-        }, 2000);
+        if (!this.checkEndGame()) {
+          setTimeout( () => {
+            this.forceComputerTurn();
+          }, 2000);
+        }
       }
     }
   }
@@ -43,6 +46,18 @@ class Game extends React.Component {
       turn: this.game.currentTurn,
       evalGrid: this.game.players[2].lastEvaluation.slice()
     });
+    this.checkEndGame();
+  }
+
+  checkEndGame() {
+    if (this.game.moves === 0) {
+      console.log('Game over');
+      let whiteCount = this.game.countPieces(TILE_TYPE.WHITE);
+      let blackCount = this.game.boardSize ** 2 - whiteCount;
+      console.log(`Black: ${blackCount}\nWhite: ${whiteCount}`);
+      return true;
+    }
+    return false;
   }
 
   renderBoard() {
@@ -68,7 +83,7 @@ class Game extends React.Component {
                     return (
                       <td key={rIndex + ' ' + cIndex} onClick={this.clickTile(rIndex, cIndex)}>
                         <span className={'tile ' + tileClass[c]}></span>
-                        <span className="eval">{this.state.evalGrid[rIndex][cIndex]}</span>
+                        {/* <span className="eval">{this.state.evalGrid[rIndex][cIndex]}</span> */}
                       </td>
                     );
                   })}
