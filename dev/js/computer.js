@@ -38,7 +38,6 @@ class ComputerPlayer {
     // Adjust points grid based on opponent's last move
     const lastMove = this.game.lastMove;
     if (this.isCorner(lastMove.r, lastMove.c)) {
-      console.log('Last play was in corner, updating grid');
       this.setCornerValues(lastMove.r, lastMove.c, 115, 125);
     }
   }
@@ -47,7 +46,6 @@ class ComputerPlayer {
     // Adjust points grid based on the move the computer just made
     const lastMove = this.game.lastMove;
     if (this.isCorner(lastMove.r, lastMove.c)) {
-      console.log('Just played in corner, updating grid');
       this.setCornerValues(lastMove.r, lastMove.c, 475, 465);
     }
   }
@@ -126,8 +124,7 @@ class ComputerPlayer {
             this.lastEvaluation[r][c] = `g ${moveValue}`;
           }
         }
-        // Update most recent evaluation
-        // this.lastEvaluation[r][c] = moveValue;
+
         // Check if we found a new best move
         if (moveValue > bestMoveValue) {
           bestMoveValue = moveValue;

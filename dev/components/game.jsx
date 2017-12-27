@@ -6,17 +6,33 @@ import { ComputerPlayer } from '../js/computer.js';
 class Game extends React.Component {
   constructor() {
     super();
-    this.game = new Othello(null, new ComputerPlayer);
+    this.createGame(new ComputerPlayer, new ComputerPlayer);
     this.state = {
       boardState: this.game.boardState,
       turn: this.game.currentTurn,
-      evalGrid: this.game.players[2].lastEvaluation.slice()
+      // evalGrid: this.game.players[2].lastEvaluation.slice()
     };
 
     this.renderBoard = this.renderBoard.bind(this);
     this.clickTile = this.clickTile.bind(this);
     this.forceComputerTurn = this.forceComputerTurn.bind(this);
     this.checkEndGame = this.checkEndGame.bind(this);
+    this.checkForComputerTurn = this.checkForComputerTurn.bind(this);
+    this.createGame = this.createGame.bind(this);
+  }
+
+  createGame(blackPlayer, whitePlayer) {
+    this.game = new Othello(blackPlayer, whitePlayer);
+    if (blackPlayer !== null) {
+      setTimeout( () => {
+        this.forceComputerTurn();
+      }, this.computerTurnTime());
+    }
+  }
+
+  computerTurnTime() {
+    // return 3000 + Math.random() * 3000;
+    return 1200;
   }
 
   clickTile(r, c) {
@@ -30,12 +46,16 @@ class Game extends React.Component {
           boardState: this.game.boardState,
           turn: this.game.currentTurn
         });
-        if (!this.checkEndGame()) {
-          setTimeout( () => {
-            this.forceComputerTurn();
-          }, 2000);
-        }
+        this.checkForComputerTurn();
       }
+    }
+  }
+
+  checkForComputerTurn() {
+    if (!this.checkEndGame() && this.game.players[this.game.currentTurn] !== null) {
+      setTimeout( () => {
+        this.forceComputerTurn();
+      }, this.computerTurnTime());
     }
   }
 
@@ -46,7 +66,7 @@ class Game extends React.Component {
       turn: this.game.currentTurn,
       evalGrid: this.game.players[2].lastEvaluation.slice()
     });
-    this.checkEndGame();
+    this.checkForComputerTurn();
   }
 
   checkEndGame() {
