@@ -2,15 +2,16 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Othello, TILE_TYPE } from '../js/othello.js';
 import { ComputerPlayer } from '../js/computer.js';
+import { SmartComputerPlayer } from '../js/smart_computer.js';
 
 class Game extends React.Component {
   constructor() {
     super();
-    this.createGame(new ComputerPlayer, new ComputerPlayer);
+    this.createGame(new ComputerPlayer, new SmartComputerPlayer);
     this.state = {
       boardState: this.game.boardState,
       turn: this.game.currentTurn,
-      // evalGrid: this.game.players[2].lastEvaluation.slice()
+      evalGrid: this.game.players[2].lastEvaluation.slice()
     };
 
     this.renderBoard = this.renderBoard.bind(this);
@@ -32,7 +33,7 @@ class Game extends React.Component {
 
   computerTurnTime() {
     // return 3000 + Math.random() * 3000;
-    return 1200;
+    return 600;
   }
 
   clickTile(r, c) {
@@ -103,7 +104,7 @@ class Game extends React.Component {
                     return (
                       <td key={rIndex + ' ' + cIndex} onClick={this.clickTile(rIndex, cIndex)}>
                         <span className={'tile ' + tileClass[c]}></span>
-                        {/* <span className="eval">{this.state.evalGrid[rIndex][cIndex]}</span> */}
+                        <span className="eval">{this.state.evalGrid[rIndex][cIndex]}</span>
                       </td>
                     );
                   })}

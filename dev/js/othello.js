@@ -3,9 +3,11 @@ class Othello {
     this.moves = 60;
 
     this.players = [null, player1, player2]; // dummy 0th element
-    for (let p of this.players) {
-      if (p !== null) {
-        p.game = this;
+    for (let p = 0; p < this.players.length; ++p) {
+      let player = this.players[p];
+      if (player !== null) {
+        player.game = this;
+        player.color = p;
       }
     }
 

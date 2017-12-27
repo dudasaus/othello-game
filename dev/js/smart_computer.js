@@ -1,7 +1,7 @@
 import { TILE_TYPE } from './othello.js';
 
 // Computer player for Othello
-class ComputerPlayer {
+class SmartComputerPlayer {
   constructor() {
     this.game = null;
     this.initializePointsGrid = this.initializePointsGrid.bind(this);
@@ -19,12 +19,12 @@ class ComputerPlayer {
     // How valuable a move is at a given board position
     this.pointsGrid = [
       [500, 100, 450, 300, 300, 450, 100, 500],
-      [100, 100, 400, 150, 150, 400, 100, 100],
-      [450, 400, 400, 200, 200, 400, 400, 450],
+      [100, 100, 300, 150, 150, 300, 100, 100],
+      [450, 300, 300, 200, 200, 300, 300, 450],
       [300, 150, 200, 200, 200, 200, 150, 300],
       [300, 150, 200, 200, 200, 200, 150, 300],
-      [450, 400, 400, 200, 200, 400, 400, 450],
-      [100, 100, 400, 150, 150, 400, 100, 100],
+      [450, 300, 300, 200, 200, 300, 300, 450],
+      [100, 100, 300, 150, 150, 300, 100, 100],
       [500, 100, 450, 300, 300, 450, 100, 500]
     ];
     // Make a copy
@@ -36,19 +36,14 @@ class ComputerPlayer {
 
   beforePlay() {
     if (this.game.lastMove === null) return;
-    // Adjust points grid based on opponent's last move
-    const lastMove = this.game.lastMove;
-    if (this.isCorner(lastMove.r, lastMove.c)) {
-      this.setCornerValues(lastMove.r, lastMove.c, 115, 125);
-    }
+    this.evaluateEdge(EDGES.RIGHT);
+    this.evaluateEdge(EDGES.TOP);
+    this.evaluateEdge(EDGES.LEFT);
+    this.evaluateEdge(EDGES.BOTTOM);
   }
 
   afterPlay() {
-    // Adjust points grid based on the move the computer just made
-    const lastMove = this.game.lastMove;
-    if (this.isCorner(lastMove.r, lastMove.c)) {
-      this.setCornerValues(lastMove.r, lastMove.c, 475, 465);
-    }
+    // Do nothing
   }
 
   isCorner(r, c) {
@@ -136,7 +131,8 @@ class ComputerPlayer {
       let result = {
         continuingEdge: (edgeTiles[start] === me),
         adjacentTile: edgeTiles[mid + x],
-        continuingPath: edgeTiles[start]
+        continuingPath: edgeTiles[start],
+        corner: edgeTiles[start]
       };
 
       let i = start + change;
@@ -170,11 +166,13 @@ class ComputerPlayer {
           if (left.continuingEdge || right.continuingEdge) {
             edgeValue[i] = 475;
           }
-          else if (left.adjacentTile === opponent && right.adjacentTile === opponent) {
+          else if (left.adjacentTile === opponent && left.continuingPath === opponent &&
+                   right.adjacentTile === opponent && right.continuingPath === opponent) {
             edgeValue[i] = 427;
           }
-          else if ((left.continuingPath === me && right.continuingPath !== opponent) ||
-                   (right.continuingPath === me && left.continuingPath !== opponent)) {
+          else if ((left.corner !== opponent && right.opponent !== opponent) &&
+                  ((left.continuingPath === me && right.continuingPath !== opponent) ||
+                   (right.continuingPath === me && left.continuingPath !== opponent))) {
             edgeValue[i] = 300;
           }
           else {
@@ -188,11 +186,17 @@ class ComputerPlayer {
           else if (left.adjacentTile === TILE_TYPE.EMPTY && right.adjacentTile === TILE_TYPE.EMPTY) {
             edgeValue[i] = 400;
           }
-          else if (left.adjacentTile === opponent && right.adjacentTile === opponent) {
+          else if (left.adjacentTile === opponent && left.continuingPath === opponent &&
+                   right.adjacentTile === opponent && right.continuingPath === opponent) {
             edgeValue[i] = 425;
+            console.log(edge);
+            this.game.printBoard();
+            console.log(edgeTiles);
+            console.log(left, right);
           }
-          else if ((left.continuingPath === me && right.continuingPath !== opponent) ||
-                   (right.continuingPath === me && left.continuingPath !== opponent)) {
+          else if ((left.corner !== opponent && right.opponent !== opponent) &&
+                  ((left.continuingPath === me && right.continuingPath !== opponent) ||
+                   (right.continuingPath === me && left.continuingPath !== opponent))) {
             edgeValue[i] = 300;
           }
           else if ((left.adjacentTile === opponent && right.adjacentTile === TILE_TYPE.EMPTY) ||
@@ -215,12 +219,12 @@ class ComputerPlayer {
     }
     else if (edge === EDGES.LEFT) {
       for (let i = 0; i < this.game.boardSize; ++i) {
-        this.pointsGrid[0][i] = edgeValue[i];
+        this.pointsGrid[i][0] = edgeValue[i];
       }
     }
     else if (edge === EDGES.RIGHT) {
       for (let i = 0; i < this.game.boardSize; ++i) {
-        this.pointsGrid[this.game.boardSize - 1][i] = edgeValue[i];
+        this.pointsGrid[i][this.game.boardSize - 1] = edgeValue[i];
       }
     }
   }
@@ -282,4 +286,4 @@ class ComputerPlayer {
 
 const EDGES = { RIGHT: 0, TOP: 1, LEFT: 2, BOTTOM: 3 };
 
-module.exports = { ComputerPlayer };
+module.exports = { SmartComputerPlayer };
