@@ -19,12 +19,12 @@ class SmartComputerPlayer {
     // How valuable a move is at a given board position
     this.pointsGrid = [
       [500, 100, 450, 300, 300, 450, 100, 500],
-      [100, 100, 300, 150, 150, 300, 100, 100],
-      [450, 300, 300, 200, 200, 300, 300, 450],
+      [100, 100, 250, 150, 150, 300, 100, 100],
+      [450, 250, 250, 200, 200, 250, 250, 450],
       [300, 150, 200, 200, 200, 200, 150, 300],
       [300, 150, 200, 200, 200, 200, 150, 300],
-      [450, 300, 300, 200, 200, 300, 300, 450],
-      [100, 100, 300, 150, 150, 300, 100, 100],
+      [450, 250, 250, 200, 200, 250, 250, 450],
+      [100, 100, 250, 150, 150, 250, 100, 100],
       [500, 100, 450, 300, 300, 450, 100, 500]
     ];
     // Make a copy
@@ -90,12 +90,8 @@ class SmartComputerPlayer {
     const board = this.game.boardState;
     const me = this.color;
     const opponent = (me === TILE_TYPE.BLACK) ? TILE_TYPE.WHITE : TILE_TYPE.BLACK;
-    let edgeValue = new Array(this.game.boardSize);
+    let edgeValue = [500, 100, 450, 300, 300, 450, 100, 500];
     let edgeTiles = new Array(this.game.boardSize);
-    for (let i = 0; i < this.game.boardSize; ++i) edgeValue[i] = -1;
-    edgeValue[0] = 500;
-    edgeValue[this.game.boardSize - 1] = 500;
-    // [500, -1, -1, -1, -1, -1, -1, 500]
 
     // Get edge tiles
     if (edge === EDGES.TOP) {
@@ -170,11 +166,11 @@ class SmartComputerPlayer {
                    right.adjacentTile === opponent && right.continuingPath === opponent) {
             edgeValue[i] = 427;
           }
-          else if ((left.corner !== opponent && right.opponent !== opponent) &&
-                  ((left.continuingPath === me && right.continuingPath !== opponent) ||
-                   (right.continuingPath === me && left.continuingPath !== opponent))) {
-            edgeValue[i] = 300;
-          }
+          // else if ((left.corner !== opponent && right.opponent !== opponent) &&
+          //         ((left.continuingPath === me && right.continuingPath !== opponent) ||
+          //          (right.continuingPath === me && left.continuingPath !== opponent))) {
+          //   edgeValue[i] = 300;
+          // }
           else {
             edgeValue[i] = 100;
           }
@@ -189,10 +185,6 @@ class SmartComputerPlayer {
           else if (left.adjacentTile === opponent && left.continuingPath === opponent &&
                    right.adjacentTile === opponent && right.continuingPath === opponent) {
             edgeValue[i] = 425;
-            console.log(edge);
-            this.game.printBoard();
-            console.log(edgeTiles);
-            console.log(left, right);
           }
           else if ((left.corner !== opponent && right.opponent !== opponent) &&
                   ((left.continuingPath === me && right.continuingPath !== opponent) ||
