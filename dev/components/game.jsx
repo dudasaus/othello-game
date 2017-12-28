@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Othello, TILE_TYPE } from '../js/othello.js';
-import { ComputerPlayer } from '../js/computer.js';
+// import { ComputerPlayer } from '../js/computer.js';
 import { SmartComputerPlayer } from '../js/smart_computer.js';
 
 class Game extends React.Component {
