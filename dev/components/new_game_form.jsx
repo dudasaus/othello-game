@@ -39,7 +39,6 @@ class NewGameForm extends React.Component {
 
   submitHandler(event) {
     event.preventDefault();
-    console.log('form submit handler');
     this.props.submitHandler({
       player1: this.state.player1,
       player2: this.state.player2
