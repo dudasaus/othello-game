@@ -3,14 +3,16 @@ import { render } from 'react-dom';
 import { Othello, TILE_TYPE } from '../js/othello.js';
 // import { ComputerPlayer } from '../js/computer.js';
 import { SmartComputerPlayer } from '../js/smart_computer.js';
+import { Menu, MENU_OPTIONS } from './menu.jsx';
 
 class Game extends React.Component {
   constructor() {
     super();
-    this.createGame(null, new SmartComputerPlayer);
+    this.createGame(null, null);
     this.state = {
       boardState: this.game.boardState,
       turn: this.game.currentTurn,
+      menuOpen: MENU_OPTIONS.NEW_GAME,
       // evalGrid: this.game.players[1].lastEvaluation.slice()
     };
 
@@ -20,6 +22,7 @@ class Game extends React.Component {
     this.checkEndGame = this.checkEndGame.bind(this);
     this.checkForComputerTurn = this.checkForComputerTurn.bind(this);
     this.createGame = this.createGame.bind(this);
+    this.menuSubmitHandler = this.menuSubmitHandler.bind(this);
   }
 
   createGame(blackPlayer, whitePlayer) {
@@ -118,9 +121,36 @@ class Game extends React.Component {
     );
   }
 
+  renderMenu() {
+    if (this.state.menuOpen !== null) {
+      return (
+        <Menu options={this.state.menuOpen}
+          submitHandler={this.menuSubmitHandler}/>
+      );
+    }
+    else {
+      return null;
+    }
+  }
+
+  menuSubmitHandler(formResults) {
+    console.log(this.state.menuOpen);
+    if (this.state.menuOpen === MENU_OPTIONS.NEW_GAME) {
+      let player1 = (formResults.player1 === 'Human') ? null : new SmartComputerPlayer;
+      let player2 = (formResults.player2 === 'Human') ? null : new SmartComputerPlayer;
+      this.createGame(player1, player2);
+      this.setState({
+        boardState: this.game.boardState,
+        turn: this.game.currentTurn,
+        menuOpen: null
+      });
+    }
+  }
+
   render() {
     return (
       <div>
+        { this.renderMenu() }
         { this.renderBoard() }
       </div>
     );
