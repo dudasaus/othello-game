@@ -177,6 +177,9 @@ body {
   align-items: center; }
   .turn-ui:hover {
     opacity: 1; }
+  @media (max-width: 800px) {
+    .turn-ui {
+      font-size: 0.9em; } }
 
 .signature {
   text-align: center;

@@ -220,6 +220,9 @@ $boardColor: green;
   &:hover {
     opacity: 1;
   }
+  @include use-at(phone) {
+    font-size: 0.9em;
+  }
 }
 
 .signature {
