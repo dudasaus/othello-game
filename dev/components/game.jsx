@@ -4,6 +4,7 @@ import { Othello, TILE_TYPE } from '../js/othello.js';
 // import { ComputerPlayer } from '../js/computer.js';
 import { SmartComputerPlayer } from '../js/smart_computer.js';
 import { Menu, MENU_OPTIONS } from './menu.jsx';
+import { GameUI } from './game_ui.jsx';
 
 class Game extends React.Component {
   constructor() {
@@ -23,18 +24,21 @@ class Game extends React.Component {
     this.checkForComputerTurn = this.checkForComputerTurn.bind(this);
     this.createGame = this.createGame.bind(this);
     this.menuSubmitHandler = this.menuSubmitHandler.bind(this);
+    this.newGameButtonClick = this.newGameButtonClick.bind(this);
   }
 
   createGame(blackPlayer, whitePlayer) {
     this.game = new Othello(blackPlayer, whitePlayer);
-    if (blackPlayer !== null) {
-      setTimeout( () => {
-        this.forceComputerTurn();
-      }, this.computerTurnTime());
+    if (this.computerTimer) {
+      clearTimeout(this.computerTimer);
     }
+    this.checkForComputerTurn();
   }
 
   computerTurnTime() {
+    if (this.game.players[1] !== null && this.game.players[2] !== null) {
+      return 500;
+    }
     return 2000 + Math.random() * 1000;
     // return 600;
   }
@@ -57,7 +61,7 @@ class Game extends React.Component {
 
   checkForComputerTurn() {
     if (!this.checkEndGame() && this.game.players[this.game.currentTurn] !== null) {
-      setTimeout( () => {
+      this.computerTimer = setTimeout( () => {
         this.forceComputerTurn();
       }, this.computerTurnTime());
     }
@@ -133,8 +137,12 @@ class Game extends React.Component {
     }
   }
 
+  renderUI() {
+    if (this.state.menuOpen !== null) return null;
+    return <GameUI game={this.game} newGameHandler={this.newGameButtonClick}/>;
+  }
+
   menuSubmitHandler(formResults) {
-    console.log(this.state.menuOpen);
     if (this.state.menuOpen === MENU_OPTIONS.NEW_GAME) {
       let player1 = (formResults.player1 === 'Human') ? null : new SmartComputerPlayer;
       let player2 = (formResults.player2 === 'Human') ? null : new SmartComputerPlayer;
@@ -147,11 +155,18 @@ class Game extends React.Component {
     }
   }
 
+  newGameButtonClick() {
+    this.setState({
+      menuOpen: MENU_OPTIONS.NEW_GAME
+    });
+  }
+
   render() {
     return (
       <div>
         { this.renderMenu() }
         { this.renderBoard() }
+        { this.renderUI() }
       </div>
     );
   }
