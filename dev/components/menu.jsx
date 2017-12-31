@@ -8,15 +8,26 @@ class Menu extends React.Component {
     super();
 
     this.state = {};
+    this.closeButton = this.closeButton.bind(this);
+  }
+
+  closeButton() {
+    if (this.props.closeHandler !== null) {
+      return <button className="btn close-btn" onClick={this.props.closeHandler}>X</button>;
+    }
+    else {
+      return null;
+    }
   }
 
   render() {
     return (
-      <div className="menu-overlay">
-        <div className="menu-modal">
+      <div className="menu-overlay" onClick={this.props.closeHandler}>
+        <div className="menu-modal" onClick={(e)=>e.stopPropagation()}>
           <span className="game-title">Othello</span>
           <NewGameForm submitHandler={this.props.submitHandler}/>
           <Signature/>
+          {this.closeButton()}
         </div>
       </div>
     );

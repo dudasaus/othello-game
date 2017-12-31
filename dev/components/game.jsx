@@ -17,6 +17,8 @@ class Game extends React.Component {
       // evalGrid: this.game.players[1].lastEvaluation.slice()
     };
 
+    this.closeMenuFunction = null;
+
     this.renderBoard = this.renderBoard.bind(this);
     this.clickTile = this.clickTile.bind(this);
     this.forceComputerTurn = this.forceComputerTurn.bind(this);
@@ -25,6 +27,7 @@ class Game extends React.Component {
     this.createGame = this.createGame.bind(this);
     this.menuSubmitHandler = this.menuSubmitHandler.bind(this);
     this.newGameButtonClick = this.newGameButtonClick.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
   }
 
   createGame(blackPlayer, whitePlayer) {
@@ -129,7 +132,8 @@ class Game extends React.Component {
     if (this.state.menuOpen !== null) {
       return (
         <Menu options={this.state.menuOpen}
-          submitHandler={this.menuSubmitHandler}/>
+          submitHandler={this.menuSubmitHandler}
+          closeHandler={this.closeMenuFunction} />
       );
     }
     else {
@@ -147,6 +151,7 @@ class Game extends React.Component {
       let player1 = (formResults.player1 === 'Human') ? null : new SmartComputerPlayer;
       let player2 = (formResults.player2 === 'Human') ? null : new SmartComputerPlayer;
       this.createGame(player1, player2);
+      this.closeMenuFunction = this.closeMenu;
       this.setState({
         boardState: this.game.boardState,
         turn: this.game.currentTurn,
@@ -156,9 +161,19 @@ class Game extends React.Component {
   }
 
   newGameButtonClick() {
+    if (this.computerTimer) {
+      clearTimeout(this.computerTimer);
+    }
     this.setState({
       menuOpen: MENU_OPTIONS.NEW_GAME
     });
+  }
+
+  closeMenu() {
+    this.setState({
+      menuOpen: null
+    });
+    this.checkForComputerTurn();
   }
 
   render() {

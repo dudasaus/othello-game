@@ -198,6 +198,16 @@ $boardColor: green;
   padding: 0.5em 1em;
 }
 
+.btn.close-btn {
+  position: absolute;
+  right: 0.5em;
+  top: 0.5em;
+  margin: 0;
+  padding: 0.5em;
+  border: none;
+  cursor: pointer;
+}
+
 .turn-ui {
   margin: 1em 0;
   background: #eee;
@@ -209,9 +219,6 @@ $boardColor: green;
   align-items: center;
   &:hover {
     opacity: 1;
-  }
-  .btn {
-    // float: right;
   }
 }
 
